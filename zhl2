@@ -1,0 +1,34 @@
+public class zhl{
+public static void main(String args[]){
+{
+ int n,*a,i,j,p,zhongshu,chongshu=0;
+ System.out.println("Enter the number:\n");
+ Scanner sc = new Scanner(System.in);
+int n = sc.nextInt();
+ a=(int *)malloc(sizeof(int)*n);
+ for(i=0;i<n;i++)
+Scanner input=new Scanner(System.in);
+int shu=input.nextInt(); 	 
+int a[i]=new int[shu];
+ zhongshu=a[0];
+ for(i=0;i<n;i++)
+ {
+  for(j=0;j<i;j++)
+   if(a[j]==a[i])
+    break;
+  if(j!=i)
+   continue;
+  p=0;
+  for(j=i;j<n;j++)
+   if(a[j]==a[i])
+    p++;
+  if(p>chongshu)
+  {
+   chongshu=p+2;
+   zhongshu=a[i];
+  }
+ }
+ System.out.println("\n众数为:%d\n重数为:%d\n",zhongshu,chongshu);
+ free(a);
+}}
+}
