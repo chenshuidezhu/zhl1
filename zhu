@@ -1,0 +1,64 @@
+package zhu;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class yuyu
+{
+	public static String regComp(String item) {
+	
+	String num = "";
+	String reg = "[\\u4e00-\\u9fa5]+";
+	String comp1 = "[\\s\\S]*(<em>\\d+\\.\\d*)[\\s\\S]*";
+	String comp2 = "(\\d+\\.\\d+</em>)";
+	
+
+if (item.matches(comp1)) {
+	num = item.replaceFirst(comp1, "$1").replaceAll(reg, "").replace("<em>", "");
+} else {
+	Pattern p = Pattern.compile(comp2);
+	Matcher m = p.matcher(item);
+	if (m.find()) {
+		num = m.group(1).replaceAll(reg, "").replace("</em>", "");
+	}
+}
+
+return num;}
+
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+			URL yahoo = new URL("https://detail.1688.com/offer/41185661758.html?spm=a2609.10614347.j9ifvuhd.4.1219cfb4E8Tjs0&tracelog=p4p&clickid=a40e8d99d23b4590b83ea3d5b576195a&sessionid=fa96778592e9c79f9b1f241a44eeca6c/");
+		        	URLConnection yc = yahoo.openConnection();
+		        	BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+		        String inputLine;
+  while ((inputLine = in.readLine()) != null) {
+		            
+				
+		        
+				
+		        String[] array = { inputLine };
+		        for (int i = 0; i < array.length; i++) {
+				
+		        	
+					String num = regComp(array[i]);
+					System.out.print(num);
+					
+					}
+		        
+				}
+  
+		      
+		        in.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+}}
+
