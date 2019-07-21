@@ -1,0 +1,125 @@
+# zhl1
+package qimo1;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class Qimo
+{
+	private static int n, m;
+	private static double v;
+	private static double wupin[][];
+	private static double yueshu[];
+	private static ArrayList<Double> list;
+	double maxtv;
+	double tv;
+	int X = 1;
+
+	void dfs_back(int i)
+	{
+		if (i > n)
+		{
+			if (tv > maxtv)
+			{
+				maxtv = tv;
+				list.add(maxtv);
+			}
+
+		} else
+
+		{
+			v -= wupin[0][i - 1];
+			X = 1;
+			for (int x = 0; x < m; x++)
+			{
+				if (yueshu[x] - wupin[x + 1][i - 1] < 0)
+				{
+					X = 0;
+					break;
+				}
+			}
+
+			if (X == 1)
+			{
+				for (int x = 0; x < m; x++)
+				{
+					yueshu[x] -= wupin[x + 1][i - 1];
+				}
+				tv = tv + wupin[0][i - 1];
+
+				dfs_back( i + 1 );
+
+				for (int x = 0; x < m; x++)
+				{
+					yueshu[x] += wupin[x + 1][i - 1];
+				}
+				tv -= wupin[0][i - 1];
+			}
+
+			if (tv + v > maxtv)
+			{
+				dfs_back( i + 1 );
+			}
+			v += wupin[0][i - 1];
+
+		}
+
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner scanner = new Scanner(System.in);
+		int num = scanner.nextInt();
+		for (int t = 0; t < num; t++)
+		{
+			list = new ArrayList<Double>();
+			n = scanner.nextInt();
+			m = scanner.nextInt();
+			wupin = new double[m + 1][n];
+			yueshu = new double[m];
+			for (int x = 0; x <= m; x++)
+			{
+				for (int y = 0; y < n; y++)
+				{
+					wupin[x][y] = scanner.nextDouble();
+
+				}
+			}
+			for (int z = 0; z < m; z++)
+			{
+				yueshu[z] = scanner.nextDouble();
+			}
+			for (int k = 0; k < n; k++)
+			{
+				v += wupin[0][k];
+			}
+
+			Qimo q = new Qimo();
+			q.dfs_back(1);
+
+			Comparator<Double> g = new Comparator<Double>() {
+
+				@Override
+				public int compare(Double o1, Double o2)
+				{
+					if (o1 > o2)
+						return -1;
+					if (o1 < o2)
+						return 1;
+					// TODO Auto-generated method stub
+					return 0;
+				}
+
+			};
+			Collections.sort(list, g);
+			double max = list.get(0);
+			String str = String.format("%.1f", max);
+			System.out.print("最大价值为" + str);
+			System.out.println();
+			System.out.println();
+		}
+		scanner.close();
+	}
+}
